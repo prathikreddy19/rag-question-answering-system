@@ -1,75 +1,74 @@
-# 🚀 RAG Question Answering System
+# RAG Question Answering System
 
-A **Retrieval-Augmented Generation (RAG)** system built from scratch using modern NLP techniques.
-This project combines **semantic search (vector embeddings)** with a **local LLM (FLAN-T5)** to answer questions based on contextual data.
+This project implements a simple **Retrieval-Augmented Generation (RAG)** pipeline from scratch.
+It combines semantic search (via embeddings) with a local language model (**FLAN-T5**) to answer questions based on context.
 
 ---
 
-## 📌 Overview
+## Overview
 
-This system allows users to ask natural language questions and retrieves the most relevant context from a dataset before generating accurate answers.
+The goal of this project is to answer user queries by:
 
-### 🔁 Pipeline Flow
+1. Finding the most relevant text chunks from a dataset
+2. Passing those chunks to a language model
+3. Generating a context-aware answer
 
-```text
+---
+
+## How it works
+
+```
 User Query
    ↓
 Embedding (SentenceTransformer)
    ↓
-Vector Search (ChromaDB)
+Similarity Search (ChromaDB)
    ↓
-Top-K Relevant Chunks
+Top relevant chunks
    ↓
-LLM (FLAN-T5)
+FLAN-T5 (generation)
    ↓
 Final Answer
 ```
 
 ---
 
-## 🧠 Key Features
+## Features
 
-* 🔍 Semantic search using vector embeddings
-* 📚 Context-aware question answering
-* ⚡ Fully local (no API required)
-* 🧩 Modular architecture (easy to extend)
-* 🗂 Handles large datasets via chunking
-* 🧪 Built using real-world dataset (SQuAD v2)
-
----
-
-## 🛠️ Tech Stack
-
-| Component       | Technology                                |
-| --------------- | ----------------------------------------- |
-| Language        | Python                                    |
-| Embeddings      | SentenceTransformers (`all-MiniLM-L6-v2`) |
-| Vector Database | ChromaDB                                  |
-| LLM             | FLAN-T5 (HuggingFace Transformers)        |
-| Dataset         | SQuAD v2                                  |
-| Environment     | VS Code / Jupyter / Colab                 |
+* Semantic search using vector embeddings
+* Context-based question answering
+* Fully local (no external APIs required)
+* Modular code structure (easy to extend)
+* Works with real-world dataset (SQuAD v2)
 
 ---
 
-## 📂 Project Structure
+## Tech Stack
+
+* Python
+* SentenceTransformers (`all-MiniLM-L6-v2`)
+* ChromaDB
+* HuggingFace Transformers (FLAN-T5)
+* SQuAD v2 dataset
+
+---
+
+## Project Structure
 
 ```
 rag-project/
 │
 ├── app/
-│   ├── embedder.py      # Embedding generation
-│   ├── retriever.py     # Vector DB + retrieval
-│   ├── generator.py     # FLAN-T5 response generation
-│   ├── rag.py           # Pipeline integration
+│   ├── embedder.py
+│   ├── retriever.py
+│   ├── generator.py
+│   ├── rag.py
 │
-├── data/                # (ignored in Git)
-│   ├── embeddings.npy
-│   ├── metadata.json
-│
+├── data/                # not included in repo
 ├── notebook/
-│   └── rag_pipeline.ipynb   # Data preprocessing & experimentation
+│   └── rag_pipeline.ipynb
 │
-├── main.py              # CLI interface
+├── main.py
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -77,7 +76,7 @@ rag-project/
 
 ---
 
-## ⚙️ Installation
+## Setup
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/rag-question-answering-system.git
@@ -87,107 +86,50 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Usage
+## Run
 
 ```bash
 python main.py
 ```
 
-Then ask questions:
+Example:
 
-```text
+```
 Ask a question: Who is Beyonce?
 Answer: Beyoncé is an American singer, songwriter, and actress.
 ```
 
 ---
 
-## 📊 Dataset
+## Dataset
 
-* Source: **SQuAD v2 (Stanford Question Answering Dataset)**
-* Data is:
+This project uses **SQuAD v2**.
 
-  * cleaned
-  * chunked
-  * embedded
-  * stored for retrieval
+The dataset is:
 
-⚠️ Note:
-Large files like embeddings are not included in the repo.
-Run the notebook to regenerate them.
+* cleaned
+* split into chunks
+* converted into embeddings
+* stored for retrieval
 
----
-
-## 🧠 How It Works
-
-### 1. Data Processing
-
-* Extract context, question, and answer
-* Chunk large passages into smaller segments
-
-### 2. Embedding Generation
-
-* Convert text chunks into dense vectors using SentenceTransformer
-
-### 3. Storage
-
-* Store embeddings in ChromaDB for fast similarity search
-
-### 4. Retrieval
-
-* Convert user query into embedding
-* Retrieve top-k most relevant chunks
-
-### 5. Generation
-
-* Pass retrieved context into FLAN-T5
-* Generate final answer
+Note:
+Large files (like embeddings) are not included in the repo.
+You can regenerate them using the notebook.
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
-* Local model (FLAN-T5) may produce less accurate answers than large APIs
-* Retrieval quality depends on chunking strategy
-* No reranking (can be improved)
-
----
-
-## 🚀 Future Improvements
-
-* 🔼 Add reranking (improve accuracy)
-* 🌐 Build web UI (Streamlit / React)
-* ⚡ Optimize latency
-* 🧠 Use stronger LLM (LLaMA / API-based)
-* 💬 Add conversational memory
+* FLAN-T5 (local) is smaller than modern LLMs, so answers may not always be perfect
+* Retrieval depends on chunk quality
+* No reranking yet (can be improved)
 
 ---
 
-## 📸 Example
+## Possible Improvements
 
-**Input:**
+* Add reranking for better retrieval
+* Improve chunking strategy
+* Add a web interface (Streamlit / React)
+* Use a stronger LLM for better generation
 
-```
-Who is Beyonce?
-```
-
-**Output:**
-
-```
-Beyoncé is an American singer, songwriter, and actress.
-```
-
----
-
-## 👨‍💻 Author
-
-**Prathik Reddy**
-
-* B.Tech Student
-* Interested in AI, ML, and Full Stack Development
-
----
-
-## ⭐ If you like this project
-
-Give it a star ⭐ on GitHub — it helps a lot!
